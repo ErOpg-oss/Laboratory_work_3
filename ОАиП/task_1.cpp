@@ -51,7 +51,7 @@ std::vector<Dish> loadDishes() {
 
         d.name = line.substr(0, p1);
         d.type = line.substr(p1 + 1, p2 - p1 - 1);
-        d.price = stod(line.substr(p2 + 1));
+        d.price = std::stod(line.substr(p2 + 1));
 
         dishes.push_back(d);
     }
@@ -64,7 +64,7 @@ void searchDish() {
     std::string query;
     std::getline(std::cin, query);
 
-    auto dishes = loadDishes();
+    std::vector<Dish> dishes = loadDishes();
 
     for (auto &d : dishes) {
         if (d.name == query) {
@@ -78,7 +78,7 @@ void searchDish() {
 }
 
 void sortDishes() {
-    auto dishes = loadDishes();
+    std::vector<Dish> dishes = loadDishes();
 
     int choice;
     std::cout << "Сортировать по:\n1 — типу\n2 — цене\nВыбор: ";
@@ -86,20 +86,22 @@ void sortDishes() {
     std::cin.ignore();
 
     if (choice == 1) {
-        std::sort(dishes.begin(), dishes.end(), [](Dish &a, Dish &b) {
+        std::sort(dishes.begin(), dishes.end(), [](const Dish &a, const Dish &b) {
             return a.type < b.type;
         });
         saveResults("Сортировка выполнена по типу.");
-    } else {
-        std::sort(dishes.begin(), dishes.end(), [](Dish &a, Dish &b) {
+    } 
+    else 
+    {
+        std::sort(dishes.begin(), dishes.end(), [](const Dish &a, const Dish &b) {
             return a.price < b.price;
         });
         saveResults("Сортировка выполнена по цене.");
     }
 
     std::ofstream file("menu.txt", std::ios::trunc);
-    for (auto &d : dishes) {
-        file << d.name << ";" << d.type << ";" << d.price << "\n";
+    for (size_t i = 0; i < dishes.size(); i++) {
+        file << dishes[i].name << ";" << dishes[i].type << ";" << dishes[i].price << "\n";
     }
     file.close();
 
@@ -112,15 +114,15 @@ void filterPrice() {
     std::cin >> maxPrice;
     std::cin.ignore();
 
-    auto dishes = loadDishes();
+    std::vector<Dish> dishes = loadDishes();
 
     std::cout << "Блюда дешевле или равные " << maxPrice << ":\n";
 
     std::string results;
-    for (auto &d : dishes) {
-        if (d.price <= maxPrice) {
-            std::cout << d.name << " — " << d.type << " — " << d.price << "\n";
-            results += d.name + "\n";
+    for (size_t i = 0; i < dishes.size(); i++) {
+        if (dishes[i].price <= maxPrice) {
+            std::cout << dishes[i].name << " — " << dishes[i].type << " — " << dishes[i].price << "\n";
+            results += dishes[i].name + "\n";
         }
     }
 
