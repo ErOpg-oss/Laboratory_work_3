@@ -66,10 +66,10 @@ void searchDish() {
 
     std::vector<Dish> dishes = loadDishes();
 
-    for (auto &d : dishes) {
-        if (d.name == query) {
-            std::cout << "Найдено: " << d.name << ", " << d.type << ", " << d.price << "\n";
-            saveResults("Найдено блюдо: " + d.name);
+    for (size_t i = 0; i < dishes.size(); i++) {
+        if (dishes[i].name == query) {
+            std::cout << "Найдено: " << dishes[i].name << ", " << dishes[i].type << ", " << dishes[i].price << "\n";
+            saveResults("Найдено блюдо: " + dishes[i].name);
             return;
         }
     }
@@ -86,16 +86,12 @@ void sortDishes() {
     std::cin.ignore();
 
     if (choice == 1) {
-        std::sort(dishes.begin(), dishes.end(), [](const Dish &a, const Dish &b) {
-            return a.type < b.type;
-        });
+        std::sort(dishes.begin(), dishes.end(), [](Dish &a, Dish &b) { return a.type < b.type;});
         saveResults("Сортировка выполнена по типу.");
     } 
     else 
     {
-        std::sort(dishes.begin(), dishes.end(), [](const Dish &a, const Dish &b) {
-            return a.price < b.price;
-        });
+        std::sort(dishes.begin(), dishes.end(), [](Dish &a, Dish &b) {return a.price < b.price;});
         saveResults("Сортировка выполнена по цене.");
     }
 

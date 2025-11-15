@@ -1,8 +1,8 @@
-output/
+**/output/
 .DS_Store
 Thumbs.db
 *.log
 node_modules/
 .env
 *.tmp
-.vscode/
+**/.vscode/
