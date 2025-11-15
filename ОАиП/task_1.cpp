@@ -55,7 +55,6 @@ std::vector<Dish> loadDishes() {
 
         dishes.push_back(d);
     }
-
     return dishes;
 }
 
